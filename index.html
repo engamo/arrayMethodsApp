@@ -44,6 +44,10 @@
 
       <button onclick="addToEnd()">Add to End</button>
     </div>
+    <hr />
+    <input type="text" id="searchBox" size="50" onkeyup="searchUser()" />
+
+    <hr />
     <div id="users">
       <!-- <option>user1</option>
         </select> -->
@@ -102,15 +106,19 @@
         let userBox = "";
         let newUser = "<option> Select new user</option>";
 
-        users.forEach((user, index, users) => {
-          userBox += `<div class="user">
+        if (users.length) {
+          users.forEach((user, index, users) => {
+            userBox += `<div class="user">
                       <img src="${user.profileImage}" alt="${user.firstName}"/>
                       ${user.firstName} ${user.lastName}
                      <hr>
-                    <button onclick="deleteUser(${index})"> Delete </button> 
+                    <button onclick="deleteUser(${index})"> Delete </button>
                      </div>`;
-          usersContainer.innerHTML = userBox;
-        });
+            usersContainer.innerHTML = userBox;
+          });
+        } else {
+          usersContainer.innerHTML = "No user found";
+        }
 
         newUserList.forEach((user) => {
           newUser += `<option value= ${JSON.stringify(user)}> ${
@@ -151,7 +159,20 @@
         renderUsers();
       }
       function deleteUser(index) {
-        users.splice(index, 1);
+        let confirmDelete = confirm(
+          `Are you sure you want to delete ${users[index].firstName}`
+        );
+        if (confirmDelete) {
+          users.splice(index, 1);
+          renderUsers();
+        }
+      }
+
+      function searchUser() {
+        let searchQuery = document.getElementById("searchBox").value;
+        users = users.filter((user) =>
+          user.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
         renderUsers();
       }
     </script>
