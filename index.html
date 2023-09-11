@@ -6,28 +6,107 @@
     <title>Picture Array</title>
 
     <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+      }
+
+      #header {
+        background-color: rgb(0, 85, 255);
+        color: #fff;
+        text-align: center;
+        padding: 12px;
+      }
+
+      #container {
+        max-width: 800px;
+        margin: 80px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
+
+      #controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
       #users {
         display: grid;
-        grid-template-columns: auto auto auto;
-        background-color: aqua;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 3fr));
+        gap: 20px;
       }
+
       .user {
-        min-width: 200px;
-        background-color: aquamarine;
-        padding: 10px;
-        margin: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
 
       img {
-        max-width: 200px;
+        max-width: 100%;
+        border-radius: 50%;
       }
-      #controls {
-        background-color: coral;
-        margin-bottom: 30px;
-        display: flex;
-      }
+
       #newUsersContainer {
-        margin: 50px auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        margin-bottom: 20px;
+      }
+
+      select,
+      button {
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+      }
+
+      button {
+        background-color: #1e1e1e;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #333;
+      }
+
+      #header h1 {
+        font-size: 36px;
+        letter-spacing: 2px;
+      }
+
+      #controls button {
+        background-color: #f35050;
+        color: #fff;
+      }
+
+      #controls button:hover {
+        background-color: #e93c3c;
+      }
+
+      #newUsersContainer select,
+      #newUsersContainer button {
+        background-color: #333;
+        color: #fff;
+      }
+
+      #newUsersContainer select:hover,
+      #newUsersContainer button:hover {
+        background-color: #777;
       }
     </style>
   </head>
@@ -37,6 +116,34 @@
       <button onclick="removeLastUser()">Remove Last user</button>
       <button onclick="window.location.reload()">Refresh</button>
     </div>
+
+    <form name="regForm" id="regForm" onsubmit="save(event)">
+      <input
+        type="text"
+        name="firstname"
+        id="firstName"
+        placeholder="FirstName"
+      />
+      <input type="text" name="lastname" id="lastName" placeholder="LastName" />
+      <input type="text" name="email" id="email" placeholder="Email" />
+      <input type="text" name="phone" id="phone" placeholder="Phone" />
+      <input
+        type="text"
+        name="profileImage"
+        id="profileImage"
+        placeholder="Profile Image URL"
+      />
+
+      <select id="group">
+        <option value="1">Group 1</option>
+        <option value="2">Group 2</option>
+        <option value="3">Group 3</option>
+        <option value="4">Group 4</option>
+        <option value="5">Group 5</option>
+      </select>
+      <input type="submit" />
+    </form>
+
     <div id="newUsersContainer">
       <select name="" id="newUsers" onchange="getSelectedUser()"></select>
 
@@ -54,6 +161,13 @@
     />
 
     <hr />
+    <select id="userGroup">
+      <!-- <option>Filter by group</option>
+      <option value="1">group 1</option>
+      <option value="2">group 2</option>
+      <option value="3">group 3</option> -->
+    </select>
+    <hr />
     <div id="users">
       <!-- <option>user1</option>
         </select> -->
@@ -70,6 +184,7 @@
           lastName: "Dantata",
           email: "uthman@gmail.com",
           profileImage: "images/uthman.png",
+          group: 1,
         },
 
         {
@@ -77,6 +192,7 @@
           lastName: "Oyakhire",
           email: "aisosaoyakhire@gmail.com",
           profileImage: "images/aisosa.png",
+          group: 2,
         },
 
         {
@@ -84,24 +200,28 @@
           lastName: "Adie",
           email: "graceadie@gmail.com",
           profileImage: "images/grace.png",
+          group: 2,
         },
         {
           firstName: "Sherifah",
           lastName: "Omitogun",
           email: "sherifahomitigun@gmail.com",
           profileImage: "images/sherifah.png",
+          group: 1,
         },
         {
           firstName: "Vincent",
           lastName: "Nkem",
           email: "nkemvincent@gmail.com",
           profileImage: "images/vincent.png",
+          group: 3,
         },
         {
           firstName: "Kawthar",
           lastName: "Sulaiman",
           email: "sulaimankawthar@gmail.com",
           profileImage: "images/kawthar.png",
+          group: 3,
         },
       ];
 
@@ -111,36 +231,50 @@
           lastName: "Ije",
           email: "henryije@gmail.com",
           profileImage: "images/henry.png",
+          group: 3,
         },
         {
           firstName: "Owen",
           lastName: "Febechukwu",
           email: "febechukwuowen@gmail.com",
           profileImage: "images/owen.png",
+          group: 1,
         },
         {
           firstName: "Soliu",
           lastName: "Soliu",
           email: "soliu@gmail.com",
           profileImage: "images/soliu.png",
+          group: 2,
         },
         {
           firstName: "Mustapha",
           lastName: "Anthonio",
           email: "engamo123@gmail.com",
           profileImage: "images/mustapha.jpeg",
+          group: 3,
         },
       ];
+
+      let existingUsers = localStorage.getItem("users");
+      if (existingUsers == null) {
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+      users = JSON.parse(localStorage.getItem("users"));
+      // users = JSON.parse(users);
 
       //Target the DOM elements
       let usersContainer = document.getElementById("users");
       let newUsersOptions = document.getElementById("newUsers");
+      let groupOptions = document.getElementById("userGroup");
       // render users
       renderUsers();
+      extractGroup();
 
       function renderUsers() {
         let userBox = "";
         let newUser = "<option> Select new user</option>";
+        let groupOption = `<option> filter by groups </option>`;
 
         if (users.length) {
           users.forEach((user, index, users) => {
@@ -212,6 +346,39 @@
             user.lastName.toLowerCase().includes(searchQuery.toLowerCase())
         );
         renderUsers();
+      }
+
+      function extractGroup() {
+        let groups = users.map((user) => {
+          return user.group;
+        });
+        let uniqueGroups = groups.filter((group, index, groups) => {
+          return index == groups.indexOf(groups);
+        });
+        return uniqueGroups;
+      }
+
+      function save(e) {
+        e.preventDefault();
+        let firstName = document.getElementById("firstName").value;
+        let lastName = document.getElementById("lastName").value;
+        let email = document.getElementById("email").value;
+        let profileImage = document.getElementById("profileImage").value;
+        // let phone = document.getElementById("phone").value;
+        let group = document.getElementById("group").value;
+
+        let userToAdd = {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          profileImage: profileImage,
+          group: group,
+          // phone: phone,
+        };
+
+        users.push(userToAdd);
+        localStorage.setItem("users", JSON.stringify(users));
+        renderInterface();
       }
     </script>
   </body>
