@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picture Array</title>
+
+    <style>
+      #users {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        background-color: aqua;
+      }
+      .user {
+        min-width: 200px;
+        background-color: aquamarine;
+        padding: 10px;
+        margin: 10px;
+      }
+
+      img {
+        max-width: 200px;
+      }
+      #controls {
+        background-color: coral;
+        margin-bottom: 30px;
+        display: flex;
+      }
+      #newUsersContainer {
+        margin: 50px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="controls">
+      <button onclick="removeFirstUser()">Remove First user</button>
+      <button onclick="removeLastUser()">Remove Last user</button>
+      <button onclick="window.location.reload()">Refresh</button>
+    </div>
+    <div id="newUsersContainer">
+      <select name="" id="newUsers" onchange="getSelectedUser()"></select>
+
+      <button onclick="addToStart()">Add to Start</button>
+
+      <button onclick="addToEnd()">Add to End</button>
+    </div>
+    <div id="users">
+      <!-- <option>user1</option>
+        </select> -->
+      <!-- <div class="user">User 1</div>
+      <div class="user">User 2</div>
+      <div class="user">User 3</div>
+      <div class="user">User 4</div>
+      <div class="user">User 5</div> -->
+    </div>
+    <script>
+      let users = [
+        {
+          firstName: "Mustapha",
+          lastName: "Anthonio",
+          email: "engamo123@gmail.com",
+          profileImage: "images/mustapha.jpeg",
+        },
+
+        {
+          firstName: "daddy2",
+          lastName: "two",
+          email: "one@gmail.com",
+          profileImage: "images/mustapha.jpeg",
+        },
+
+        {
+          firstName: "daddy3",
+          lastName: "three",
+          email: "one@gmail.com",
+          profileImage: "images/mustapha.jpeg",
+        },
+      ];
+
+      let newUserList = [
+        {
+          firstName: "daddy4",
+          lastName: "four",
+          email: "one@gmail.com",
+          profileImage: "images/mustapha.jpeg",
+        },
+        {
+          firstName: "daddy5",
+          lastName: "five",
+          email: "one@gmail.com",
+          profileImage: "images/mustapha.jpeg",
+        },
+      ];
+
+      //Target the DOM elements
+      let usersContainer = document.getElementById("users");
+      let newUsersOptions = document.getElementById("newUsers");
+      // render users
+      renderUsers();
+
+      function renderUsers() {
+        let userBox = "";
+        let newUser = "<option> Select new user</option>";
+
+        users.forEach((user, index, users) => {
+          userBox += `<div class="user">
+                      <img src="${user.profileImage}" alt="${user.firstName}"/>
+                      ${user.firstName} ${user.lastName}
+                     <hr>
+                    <button onclick="deleteUser(${index})"> Delete </button> 
+                     </div>`;
+          usersContainer.innerHTML = userBox;
+        });
+
+        newUserList.forEach((user) => {
+          newUser += `<option value= ${JSON.stringify(user)}> ${
+            user.firstName
+          } ${user.lastName}</option>`;
+          newUsersOptions.innerHTML = newUser;
+        });
+      }
+
+      function removeFirstUser() {
+        let removedUser = users.shift();
+        alert(
+          `${removedUser.firstName} has been removed. We have ${users.length} users left`
+        );
+        renderUsers();
+      }
+      function removeLastUser() {
+        let removedUser = users.pop();
+        alert(
+          `${removedUser.firstName} has been removed. We have ${users.length} users left`
+        );
+        renderUsers();
+      }
+      function getSelectedUser() {
+        // let selectedUser = e.target.value;
+        let selectedUser =
+          newUsersOptions.options[newUsersOptions.selectedIndex].value;
+        return selectedUser;
+      }
+      function addToStart() {
+        let selected = getSelectedUser();
+        users.unshift(JSON.parse(selected));
+        renderUsers();
+      }
+      function addToEnd() {
+        let selected = getSelectedUser();
+        users.push(JSON.parse(selected));
+        renderUsers();
+      }
+      function deleteUser(index) {
+        users.splice(index, 1);
+        renderUsers();
+      }
+    </script>
+  </body>
+</html>
