@@ -45,7 +45,13 @@
       <button onclick="addToEnd()">Add to End</button>
     </div>
     <hr />
-    <input type="text" id="searchBox" size="50" onkeyup="searchUser()" />
+    <input
+      type="text"
+      id="searchBox"
+      size="50"
+      placeholder="Search users with first or last name"
+      onkeyup="searchUser()"
+    />
 
     <hr />
     <div id="users">
@@ -60,38 +66,68 @@
     <script>
       let users = [
         {
-          firstName: "Mustapha",
-          lastName: "Anthonio",
-          email: "engamo123@gmail.com",
-          profileImage: "images/mustapha.jpeg",
+          firstName: "Uthman",
+          lastName: "Dantata",
+          email: "uthman@gmail.com",
+          profileImage: "images/uthman.png",
         },
 
         {
-          firstName: "daddy2",
-          lastName: "two",
-          email: "one@gmail.com",
-          profileImage: "images/mustapha.jpeg",
+          firstName: "Aisosa",
+          lastName: "Oyakhire",
+          email: "aisosaoyakhire@gmail.com",
+          profileImage: "images/aisosa.png",
         },
 
         {
-          firstName: "daddy3",
-          lastName: "three",
-          email: "one@gmail.com",
-          profileImage: "images/mustapha.jpeg",
+          firstName: "Grace",
+          lastName: "Adie",
+          email: "graceadie@gmail.com",
+          profileImage: "images/grace.png",
+        },
+        {
+          firstName: "Sherifah",
+          lastName: "Omitogun",
+          email: "sherifahomitigun@gmail.com",
+          profileImage: "images/sherifah.png",
+        },
+        {
+          firstName: "Vincent",
+          lastName: "Nkem",
+          email: "nkemvincent@gmail.com",
+          profileImage: "images/vincent.png",
+        },
+        {
+          firstName: "Kawthar",
+          lastName: "Sulaiman",
+          email: "sulaimankawthar@gmail.com",
+          profileImage: "images/kawthar.png",
         },
       ];
 
       let newUserList = [
         {
-          firstName: "daddy4",
-          lastName: "four",
-          email: "one@gmail.com",
-          profileImage: "images/mustapha.jpeg",
+          firstName: "Henry",
+          lastName: "Ije",
+          email: "henryije@gmail.com",
+          profileImage: "images/henry.png",
         },
         {
-          firstName: "daddy5",
-          lastName: "five",
-          email: "one@gmail.com",
+          firstName: "Owen",
+          lastName: "Febechukwu",
+          email: "febechukwuowen@gmail.com",
+          profileImage: "images/owen.png",
+        },
+        {
+          firstName: "Soliu",
+          lastName: "Soliu",
+          email: "soliu@gmail.com",
+          profileImage: "images/soliu.png",
+        },
+        {
+          firstName: "Mustapha",
+          lastName: "Anthonio",
+          email: "engamo123@gmail.com",
           profileImage: "images/mustapha.jpeg",
         },
       ];
@@ -170,8 +206,10 @@
 
       function searchUser() {
         let searchQuery = document.getElementById("searchBox").value;
-        users = users.filter((user) =>
-          user.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+        users = users.filter(
+          (user) =>
+            user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.lastName.toLowerCase().includes(searchQuery.toLowerCase())
         );
         renderUsers();
       }
