@@ -111,6 +111,7 @@
     </style>
   </head>
   <body>
+    <br>
     <div id="controls">
       <button onclick="removeFirstUser()">Remove First user</button>
       <button onclick="removeLastUser()">Remove Last user</button>
@@ -120,13 +121,12 @@
     <form name="regForm" id="regForm" onsubmit="save(event)">
       <input
         type="text"
-        name="firstname"
+        name="firstName"
         id="firstName"
         placeholder="FirstName"
       />
       <input type="text" name="lastname" id="lastName" placeholder="LastName" />
       <input type="text" name="email" id="email" placeholder="Email" />
-      <input type="text" name="phone" id="phone" placeholder="Phone" />
       <input
         type="text"
         name="profileImage"
@@ -134,16 +134,17 @@
         placeholder="Profile Image URL"
       />
 
-      <select id="group">
+      <!-- <select id="group">
+        <option>Filter by Group</option>
         <option value="1">Group 1</option>
         <option value="2">Group 2</option>
         <option value="3">Group 3</option>
         <option value="4">Group 4</option>
         <option value="5">Group 5</option>
-      </select>
+      </select> -->
       <input type="submit" />
     </form>
-
+    <br>
     <div id="newUsersContainer">
       <select name="" id="newUsers" onchange="getSelectedUser()"></select>
 
@@ -162,10 +163,10 @@
 
     <hr />
     <select id="userGroup">
-      <!-- <option>Filter by group</option>
+      <option>Filter by group</option>
       <option value="1">group 1</option>
       <option value="2">group 2</option>
-      <option value="3">group 3</option> -->
+      <option value="3">group 3</option>
     </select>
     <hr />
     <div id="users">
@@ -178,53 +179,53 @@
       <div class="user">User 5</div> -->
     </div>
     <script>
-      let users = [];
-      // let users = [
-      //   {
-      //     firstName: "Uthman",
-      //     lastName: "Dantata",
-      //     email: "uthman@gmail.com",
-      //     profileImage: "images/uthman.png",
-      //     group: 1,
-      //   },
+      // let users = [];
+      let users = [
+        {
+          firstName: "Uthman",
+          lastName: "Dantata",
+          email: "uthman@gmail.com",
+          profileImage: "images/uthman.png",
+          group: 1,
+        },
 
-      //   {
-      //     firstName: "Aisosa",
-      //     lastName: "Oyakhire",
-      //     email: "aisosaoyakhire@gmail.com",
-      //     profileImage: "images/aisosa.png",
-      //     group: 2,
-      //   },
+        {
+          firstName: "Aisosa",
+          lastName: "Oyakhire",
+          email: "aisosaoyakhire@gmail.com",
+          profileImage: "images/aisosa.png",
+          group: 2,
+        },
 
-      //   {
-      //     firstName: "Grace",
-      //     lastName: "Adie",
-      //     email: "graceadie@gmail.com",
-      //     profileImage: "images/grace.png",
-      //     group: 2,
-      //   },
-      //   {
-      //     firstName: "Sherifah",
-      //     lastName: "Omitogun",
-      //     email: "sherifahomitigun@gmail.com",
-      //     profileImage: "images/sherifah.png",
-      //     group: 1,
-      //   },
-      //   {
-      //     firstName: "Vincent",
-      //     lastName: "Nkem",
-      //     email: "nkemvincent@gmail.com",
-      //     profileImage: "images/vincent.png",
-      //     group: 3,
-      //   },
-      //   {
-      //     firstName: "Kawthar",
-      //     lastName: "Sulaiman",
-      //     email: "sulaimankawthar@gmail.com",
-      //     profileImage: "images/kawthar.png",
-      //     group: 3,
-      //   },
-      // ];
+        {
+          firstName: "Grace",
+          lastName: "Adie",
+          email: "graceadie@gmail.com",
+          profileImage: "images/grace.png",
+          group: 2,
+        },
+        {
+          firstName: "Sherifah",
+          lastName: "Omitogun",
+          email: "sherifahomitigun@gmail.com",
+          profileImage: "images/sherifah.png",
+          group: 1,
+        },
+        {
+          firstName: "Vincent",
+          lastName: "Nkem",
+          email: "nkemvincent@gmail.com",
+          profileImage: "images/vincent.png",
+          group: 3,
+        },
+        {
+          firstName: "Kawthar",
+          lastName: "Sulaiman",
+          email: "sulaimankawthar@gmail.com",
+          profileImage: "images/kawthar.png",
+          group: 3,
+        },
+      ];
 
       let newUserList = [
         {
@@ -266,9 +267,9 @@
       // users = JSON.parse(users);
 
       //Target the DOM elements
-      let usersContainer = document.getElementById("users");
-      let newUsersOptions = document.getElementById("newUsers");
-      let groupOptions = document.getElementById("userGroup");
+      const usersContainer = document.getElementById("users");
+      const newUsersOptions = document.getElementById("newUsers");
+      const groupOptions = document.getElementById("userGroup");
       // render users
       renderUsers();
       extractGroup();
@@ -298,6 +299,12 @@
           } ${user.lastName}</option>`;
           newUsersOptions.innerHTML = newUser;
         });
+
+        let extractedGroup = extractGroup();
+        extractedGroup.forEach(group => {
+          groupOptions += `<option value = ${group}>Group ${group}</option>`;
+          groupOptions.innerHTML = groupOption;
+        })
       }
 
       function removeFirstUser() {
@@ -359,6 +366,18 @@
         });
         return uniqueGroups;
       }
+      function getSelectedGroup() {
+        let selectedValue = groupOptions.options[groupOptions.selectedIndex].value
+        return selectedValue;
+      }
+
+      function filterGroup() {
+        let selected = getSelectedGroup();
+        users = users.filter(user=>user.group==selected)
+        renderExistingUsers();
+        renderNewUsers();
+        renderUserGroups();
+      }
 
       function save(e) {
         e.preventDefault();
@@ -366,7 +385,6 @@
         let lastName = document.getElementById("lastName").value;
         let email = document.getElementById("email").value;
         let profileImage = document.getElementById("profileImage").value;
-        // let phone = document.getElementById("phone").value;
         let group = document.getElementById("group").value;
 
         let userToAdd = {
@@ -375,12 +393,13 @@
           email: email,
           profileImage: profileImage,
           group: group,
-          // phone: phone,
         };
 
         users.push(userToAdd);
         localStorage.setItem("users", JSON.stringify(users));
-        renderInterface();
+        renderExistingUsers();
+        renderNewUsers();
+        renderUserGroups();
       }
     </script>
   </body>
